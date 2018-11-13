@@ -63,6 +63,8 @@
       <!-- CUSTOM SCRIPTS  -->
     <script src="<?=base_url()?>assets/js/custom.js"></script>
 	
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+
 	<script>
 		var survey = []; //Bidimensional array: [ [1,3], [2,4] ]
 
@@ -97,6 +99,74 @@
 		  alert(debug);
 		};
 	</script>
-  
+
+    <?php if($showResultsDimension): 
+
+        // cat
+        $chart = [
+            'data' => [],
+            'backgroundColor' => []
+        ];
+        $labels = [];
+        foreach($showResultsCategory as $cat) {
+            $chart['data'][] += $cat->value;
+            $chart['backgroundColor'][] .= $cat->color;
+            $labels[] .= $cat->categorytext;
+        }
+
+        $res["datasets"][] = $chart;
+        $res["labels"] = $labels;
+
+        // dim
+        $dimChart = [
+            'data' => [],
+            'backgroundColor' => []
+        ];
+        $dimLabels = [];
+        foreach($showResultsDimension as $dim) {
+            $dimChart['data'][] += $dim->value;
+            $dimChart['backgroundColor'][] .= $dim->color;
+            $dimLabels[] .= $dim->dimensiontext;
+        }
+
+        $dimRes["datasets"][] = $dimChart;
+        $dimRes["labels"] = $dimLabels;
+
+
+        
+        ?>
+        <script>
+            var randomScalingFactor = function() {
+                return Math.round(Math.random() * 100);
+            };
+
+            var dt = <?=json_encode($res)?>;
+            var dimDt = <?=json_encode($dimRes)?>;
+
+            var config = {
+                type: 'pie',
+                data: dt,
+                options: {
+                    responsive: true
+                }
+            };
+
+            var dimConfig = {
+                type: 'pie',
+                data: dimDt,
+                options: {
+                    responsive: true
+                }
+            };
+
+            window.onload = function() {
+                var ctx = document.getElementById('chart-area').getContext('2d');
+                window.myPie = new Chart(ctx, config);
+
+                var ctx2 = document.getElementById('dim-chart-area').getContext('2d');
+                window.myPie = new Chart(ctx2, dimConfig);
+            };
+        </script>
+    <?php endif; ?>
 </body>
 </html>
