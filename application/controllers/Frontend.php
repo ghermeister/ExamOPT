@@ -95,5 +95,10 @@ class Frontend extends CI_Controller {
 			redirect(base_url());
 		}
 	}
+
+	public function submit_answer()
+	{
+		$this->frontend_model->save_answers();
+	}
 	
 }

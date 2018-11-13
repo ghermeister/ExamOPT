@@ -31,5 +31,42 @@ class Frontend_model extends CI_Model {
             return $query->result();
         }
         return [];
-    }
+	}
+	
+	public function save_answers()
+	{
+		$ins = [
+			'testID' => "TRIAL", // generate unique ID
+			'memberID' => $this->session->userdata('login_id'), // get session ID
+			'testdescription' => "desc_test",
+			'lancode' => "en"
+		];
+		
+		$this->db->insert('results_main', $ins);
+
+		$resultID = $this->db->insert_id();
+
+		$answers = $this->input->post();
+		
+		$data = [];
+		foreach($answers as $key => $ans) {
+			if(substr($key, 0, 3) === "opt") {
+				$res['results_mainID'] = $resultID;
+				$res['itemsID'] = substr($key, 3, strlen($key));
+				$res['value'] = $ans;
+				$data[] = $res;
+			}
+		}
+
+		$this->db->insert_batch('results_items', $data);
+
+		// update to get item text
+		$sql = "UPDATE results_items INNER JOIN vw_items ON results_items.itemsID  = vw_items.ID
+			SET results_items.itemtext = vw_items.text
+			WHERE vw_items.lancode = '{$ins['lancode']}' AND results_mainID = $resultID";
+		$this->db->query($sql);
+
+		$fn = "CALL P_CALCULATE_MAIN($resultID)";
+		$this->db->query($fn);
+	}
 }

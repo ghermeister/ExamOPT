@@ -12,27 +12,27 @@
 			?>
 				<h3><b><?=$count?>. <?=$question->text?></b><h3>
 				<label class="container-box radio-inline">
-					<input type="radio" name="opt<?=$question->ID?>">1
+					<input type="radio" name="opt<?=$question->ID?>" value="1">1
 					<span class="checkmark"></span>
 				</label>&nbsp;
 				<label class="container-box radio-inline">
-					<input type="radio" name="opt<?=$question->ID?>">2
+					<input type="radio" name="opt<?=$question->ID?>" value="2">2
 					<span class="checkmark"></span>
 				</label>&nbsp;
 				<label class="container-box radio-inline">
-					<input type="radio" name="opt<?=$question->ID?>">3
+					<input type="radio" name="opt<?=$question->ID?>" value="3">3
 					<span class="checkmark"></span>
 				</label>&nbsp;
 				<label class="container-box radio-inline">
-					<input type="radio" name="opt<?=$question->ID?>">4
+					<input type="radio" name="opt<?=$question->ID?>" value="4">4
 					<span class="checkmark"></span>
 				</label>&nbsp;
 				<label class="container-box radio-inline">
-					<input type="radio" name="opt<?=$question->ID?>">5
+					<input type="radio" name="opt<?=$question->ID?>" value="5">5
 					<span class="checkmark"></span>
 				</label>&nbsp;
 				<label class="container-box radio-inline">
-					<input type="radio" name="opt<?=$question->ID?>">6
+					<input type="radio" name="opt<?=$question->ID?>" value="6">6
 					<span class="checkmark"></span>
 				</label>&nbsp;
 			<?php
@@ -41,7 +41,7 @@
 			?>
 				<br/>
 				<br/>
-				<button class="btn btn-success btn-lg" type="button">Submit</button>
+				<button class="btn btn-success btn-lg" type="submit">Submit</button>
 			<?php
 					echo form_close();
 				endif;
