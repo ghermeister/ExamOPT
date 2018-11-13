@@ -777,8 +777,8 @@ BEGIN
  		CLOSE c_categories;
  		-- do we have to calculate dimensions?
  		SELECT hasDimensions INTO v_hasDimensions FROM tests WHERE ID = v_testID;
+		OPEN c_dimensions;
  		IF v_hasDimensions = 1 THEN
-			OPEN c_dimensions;
 			SET v_ii = 0;
 			WHILE v_ii = 0 DO
 				FETCH c_dimensions INTO v_dimensionID;
