@@ -6,7 +6,7 @@ class Frontend extends CI_Controller {
 	/**
 		Frontend Controller
 	*/
-	
+	 
 	function __construct(){
         parent::__construct();
 		$this->load->helper(array('url', 'form', 'security'));
@@ -96,9 +96,34 @@ class Frontend extends CI_Controller {
 		}
 	}
 
-	public function submit_answer()
+	public function submit_test()
 	{
-		$this->frontend_model->save_answers();
+		$answer = $this->frontend_model->save_answers();
+		if($answer){
+			redirect('/show_result/'.$answer, 'refresh');
+		}else{
+			redirect('/take_exam', 'refresh');
+		}
+	}
+
+	public function show_result($answer)
+	{
+		if($this->session->userdata('login_is_active') == 1){
+			$styles = array(
+
+			);
+			$js = array(
+				
+			);
+			$this->template->set_additional_css($styles);
+			$this->template->set_additional_js($js);
+			$this->template->load_sub('session_user', $this->session->userdata());
+			$this->template->load_sub('showResultsDimension', $this->frontend_model->show_results_dimensions($answer));
+			$this->template->load_sub('showResultsCategory', $this->frontend_model->show_results_categories($answer));
+			$this->template->load('frontend/frontend_show_result');
+		}else{
+			redirect(base_url());
+		}
 	}
 	
 }

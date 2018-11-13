@@ -19,7 +19,7 @@ class Frontend_model extends CI_Model {
 		} else {
 			return [];
 		}
-    }
+    } 
 	
 	public function rand_question(){
 		$this->db->select('*');
@@ -67,6 +67,37 @@ class Frontend_model extends CI_Model {
 		$this->db->query($sql);
 
 		$fn = "CALL P_CALCULATE_MAIN($resultID)";
-		$this->db->query($fn);
+		$save = $this->db->query($fn);
+		if($save){
+			return $resultID;
+		}else{
+			return "No Result";
+			exit();
+		}
+
+	}
+
+	public function show_results_dimensions($answer){
+		$member_id = $this->session->userdata('login_id');
+		$this->db->select('*');
+		$this->db->from('results_dimensions');
+		$this->db->where('results_mainID', $answer);
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			return $query->result();
+		}
+        return [];
+	}
+
+	public function show_results_categories($answer){
+		$member_id = $this->session->userdata('login_id');
+		$this->db->select('*');
+		$this->db->from('results_categories');
+		$this->db->where('results_mainID', $answer);
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			return $query->result();
+		}
+        return [];
 	}
 }

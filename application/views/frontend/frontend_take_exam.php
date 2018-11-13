@@ -3,7 +3,7 @@
 		<h1 class="">
 			<?php
 				if(count($questions) == 0):
-					
+					 
 				else:
 					$count = 1;
 					$attr = array('class' => 'form-horizontal', 'id' => 'formSubmitTest');
@@ -12,7 +12,7 @@
 			?>
 				<h3><b><?=$count?>. <?=$question->text?></b><h3>
 				<label class="container-box radio-inline">
-					<input type="radio" name="opt<?=$question->ID?>" value="1">1
+					<input type="radio" name="opt<?=$question->ID?>" value="1" required="required">1
 					<span class="checkmark"></span>
 				</label>&nbsp;
 				<label class="container-box radio-inline">
